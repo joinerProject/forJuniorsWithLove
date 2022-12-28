@@ -52,8 +52,8 @@ export function AuthReducer(currentState: AuthState = new AuthState(), action: A
             localStorage.setItem("user", token);            
             break;
         case AuthActionType.Logout:
-            newState.user = null;
-            newState.token = null;
+            newState.user = undefined;
+            newState.token = undefined;
             localStorage.removeItem("user")
     }
     return newState;
