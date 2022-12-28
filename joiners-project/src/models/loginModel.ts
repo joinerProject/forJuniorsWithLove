@@ -1,5 +1,5 @@
 class LoginModel {
-    public username:string;
-    public password:string;
+    public username:string | any;
+    public password:string | any;
 } 
 export default LoginModel
