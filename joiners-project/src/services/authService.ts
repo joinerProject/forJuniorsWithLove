@@ -9,22 +9,15 @@ class AuthService {
 
     public async register(userInfo:UserModel){
         const registerForm = new FormData();
-        registerForm.append('username', userInfo.username);
-        registerForm.append('email', userInfo.email);
-        registerForm.append('password', userInfo.password);
-        registerForm.append('linkedinProfile', userInfo.linkedinProfile);
-        (userInfo.phone && registerForm.append('phone', userInfo.phone));
-        const response = await axios.post(config.registerUrl, registerForm);
+        console.log('form to submit',registerForm)
+        const response = await axios.post(config.registerUrl, userInfo);
         const token = response.data;
+        console.log("token", token);
         store.dispatch(RegisterAction(token));
         return;
-    }
-
+}
     public async login(loginInfo:LoginModel) {
-        const loginForm = new FormData();
-        loginForm.append('username', loginInfo.username)
-        loginForm.append('password', loginInfo.password)
-        const response = await axios.post(config.loginUrl, loginForm);
+        const response = await axios.post(config.loginUrl, loginInfo);
         const token = response.data;
         store.dispatch(LoginAction(token));
         return;
