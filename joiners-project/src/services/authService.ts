@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ConfirmUser } from "../components/auth/changePassword";
 import LoginModel from "../models/loginModel";
 import UserModel from "../models/userModel";
 import { LoginAction, RegisterAction } from "../redux/AuthState";
@@ -28,6 +29,13 @@ class AuthService {
         const token = response.data;
         store.dispatch(LoginAction(token));
         return;
+    }
+
+    public async confirmUser(confirmInfo:ConfirmUser){
+        const response = await axios.post(config.confirmUser, confirmInfo);
+        console.log("response.data", response.data);
+        return response.data;
+
     }
 }
 const authService = new AuthService();
