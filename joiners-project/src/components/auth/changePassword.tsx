@@ -1,7 +1,5 @@
 import {  useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import LoginModel from "../../../models/loginModel";
-import authService from "../../../services/authService";
+import { useNavigate, useSubmit } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,6 +13,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from "react";
+import { Alert } from "@mui/material";
+import authService from "../../services/authService";
 
 function Copyright(props: any) {
   return (
@@ -28,18 +29,22 @@ function Copyright(props: any) {
     </Typography>
   );
 }
-
+export interface ConfirmUser {
+    username:string;
+    mail:string;
+}
 const theme = createTheme();
 
-export default function SignIn() {
-    const {register, handleSubmit, formState} = useForm<LoginModel>()
+export default function ForgotPassword() {
+    const {register, handleSubmit, formState} = useForm<ConfirmUser>()
+    const [error, setErroe] = useState(false)
     const navigate = useNavigate()
-    	const login = async (loginInfo:LoginModel) =>{
-            console.log("login info", loginInfo);
-            await authService.login(loginInfo);
-            navigate('/home-page')
+    	const confirm = async (confirmInfo:ConfirmUser) =>{
+            console.log("ConfirmUser", confirmInfo);
+            const response = await authService.confirmUser(confirmInfo);
+            if(response.username) navigate('/change-password');
+            else return setErroe(true);
         }
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -55,10 +60,11 @@ export default function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
+         
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit(login)} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit(confirm)} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -81,18 +87,17 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-               {...register('password',
+              name="mail"
+              label="mail"
+              type="mail"
+              id="mail"
+               {...register('mail',
                     {
-                        required: { value: true, message: "Missing  password", },
-                        minLength: { value: 2, message: 'Password too short' },
-                        maxLength: { value: 20, message: "Password too long!" }
+                        required: { value: true, message: "Missing  mail", },
+                        minLength: { value: 2, message: 'mail too short' },
+                        maxLength: { value: 20, message: "mail too long!" }
                     }
-                    )}
+                )}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -104,14 +109,12 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Validate User
             </Button>
+             {error &&       
+          <Alert severity="error">Username or mail are worng! Please try again</Alert>
+        }
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <Link variant="body2" href='/register'>
                   {"Don't have an account? Sign Up"}

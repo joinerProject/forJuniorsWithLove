@@ -6,7 +6,8 @@ class Config {
     public loginUrl = "";
     public userUrl = "";
     public addChatUrl = '';
-    public allChats = ''
+    public allChats = '';
+    public confirmUser = ""
 }
 class DevelopmentConfig extends Config {
     public chatListUrl = 'http://localhost:3001/api/all-chats';
@@ -17,6 +18,8 @@ class DevelopmentConfig extends Config {
     public registerUrl = "http://localhost:3001/api/auth/register";
     public loginUrl = "http://localhost:3001/api/auth/login";
     public userUrl = "http://localhost:3001/api/add-user/";
+    public confirmUser = "http://localhost:3001/api/auth/is-exist-user"
+
 }
 class TestConfig extends Config {
     public chatListUrl = 'http://localhost:3001/api/all-chats/';
@@ -27,6 +30,8 @@ class TestConfig extends Config {
     public registerUrl = "http://localhost:3001/api/auth/register";
     public loginUrl = "http://localhost:3001/api/auth/login";
     public userUrl = "http://localhost:3001/api/add-user/";
+    public confirmUser = "http://localhost:3001/api/auth/is-exist-user"
+
 }
 class ProductionConfig extends Config {
     public chatListUrl = 'http://localhost:3001/api/all-chats/';
@@ -36,6 +41,8 @@ class ProductionConfig extends Config {
     public loginUrl = "http://localhost:3001/api/auth/login";
     public allChats = 'http://localhost:3001/api/all-chats'
     public userUrl = "http://localhost:3001/api/add-user/";
+    public confirmUser = "http://localhost:3001/api/auth/is-exist-user"
+
 }
 let config: Config;
 if (process.env.NODE_ENV === "development") {

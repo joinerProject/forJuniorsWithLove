@@ -1,7 +1,7 @@
-import UserModel from '../../../models/userModel';
+import UserModel from '../../models/userModel';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import authService from '../../../services/authService';
+import authService from '../../services/authService';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
