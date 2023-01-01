@@ -92,7 +92,7 @@ export default function Register() {
                     {
                         required: { value: true, message: "Missing  email", },
                         minLength: { value: 2, message: 'email too short' },
-                        maxLength: { value: 20, message: "email too long!" }
+                        maxLength: { value: 30, message: "email too long!" }
                     }
                     )}
                 />
