@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import SignIn from "../auth/login/login";
-import Register from "../auth/register/register";
-import CreateProject from "../create-project/create-main/createProject";
+import ForgotPassword from "../auth/changePassword";
+import SignIn from "../auth/login";
+import Register from "../auth/register";
 
 const Router = (): JSX.Element => {
     return (
@@ -10,7 +10,7 @@ const Router = (): JSX.Element => {
                 <Route path="/" element={<SignIn />} />
                 <Route path="/login" element={<SignIn />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/create-project" element={<CreateProject/>}/>
+                <Route path="/forgot-password" element={<ForgotPassword/>}/>
             </Routes>
         </div>
     );
