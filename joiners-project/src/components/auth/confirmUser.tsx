@@ -42,10 +42,10 @@ export default function ForgotPassword() {
     	const confirm = async (confirmInfo:ConfirmUser) =>{
             console.log("ConfirmUser", confirmInfo);
             setErroe(true)
-            // const response = await authService.confirmUser(confirmInfo);
-            // if(response.data.username)
-             navigate('/change-password', {state:{userId:"test"}});
-            // else return setErroe(true);
+            const response = await authService.confirmUser(confirmInfo);
+            if(response.data.username)
+             navigate('/change-password', {state:{userId:response.data._id}});
+            else return setErroe(true);
         }
   return (
     <ThemeProvider theme={theme}>
