@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ConfirmUser } from "../components/auth/changePassword";
+import { ConfirmUser } from "../components/auth/confirmUser";
 import LoginModel from "../models/loginModel";
 import UserModel from "../models/userModel";
 import { LoginAction, RegisterAction } from "../redux/AuthState";
@@ -27,8 +27,14 @@ class AuthService {
     public async confirmUser(confirmInfo:ConfirmUser){
         const response = await axios.post(config.confirmUser, confirmInfo);
         console.log("response.data", response.data);
-        return response.data;
+        return response;
 
+    }
+
+    public async changePassword(userId:string, password:string){
+        const response = await axios.post<string>(config.changePassword, {userId, password});
+        const token = response.data;
+        return store.dispatch(LoginAction(token));
     }
 }
 const authService = new AuthService();

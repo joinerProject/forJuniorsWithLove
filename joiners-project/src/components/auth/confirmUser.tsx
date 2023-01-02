@@ -1,5 +1,5 @@
 import {  useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useSubmit } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,28 +17,37 @@ import { useState } from "react";
 import { Alert } from "@mui/material";
 import authService from "../../services/authService";
 
+function Copyright(props: any) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="/">
+        For Juniors With Love
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+export interface ConfirmUser {
+    username:string;
+    mail:string;
+}
 const theme = createTheme();
 
-export type NewPassword = {
-    password:string;
-    confirmPassword:string
-}
-
-const ChangePassword = (props:any) =>{
-    const {state} = useLocation()
-    console.log("state", state);
-    const navigate = useNavigate();
-    const {register, handleSubmit, formState} = useForm<NewPassword>()
-    const [error, setError] = useState(false)
-    const change = async (newPassword:NewPassword) =>{
-    if(newPassword.password !== newPassword.confirmPassword) return setError(true);
-    else {
-        await authService.changePassword(state.userId, newPassword.password);
-        navigate('/home')
+export default function ForgotPassword() {
+    const {register, handleSubmit, formState} = useForm<ConfirmUser>()
+    const [error, setErroe] = useState(false)
+    const navigate = useNavigate()
+    	const confirm = async (confirmInfo:ConfirmUser) =>{
+            console.log("ConfirmUser", confirmInfo);
+            setErroe(true)
+            // const response = await authService.confirmUser(confirmInfo);
+            // if(response.data.username)
+             navigate('/change-password', {state:{userId:"test"}});
+            // else return setErroe(true);
         }
-    }
-
-    return (
+  return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -57,21 +66,21 @@ const ChangePassword = (props:any) =>{
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit(change)} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit(confirm)} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
               fullWidth
-              id="password"
-              label="password"
-              name="password"
-              autoComplete="password"
+              id="Username"
+              label="Username"
+              name="Username"
+              autoComplete="Username"
               autoFocus
-                {...register('password',
+                {...register('username',
                     {
-                        required: { value: true, message: "Missing  password", },
-                        minLength: { value: 2, message: 'password too short' },
-                        maxLength: { value: 20, message: "password too long!" }
+                        required: { value: true, message: "Missing  username", },
+                        minLength: { value: 2, message: 'username too short' },
+                        maxLength: { value: 20, message: "username too long!" }
                     }
                     )}
 
@@ -80,15 +89,15 @@ const ChangePassword = (props:any) =>{
               margin="normal"
               required
               fullWidth
-              name="Confirm Password"
-              label="Confirm Password"
-              type="Confirm Password"
-              id="Confirm Password"
-               {...register('confirmPassword',
+              name="mail"
+              label="mail"
+              type="mail"
+              id="mail"
+               {...register('mail',
                     {
-                        required: { value: true, message: "Missing  confirm Password", },
-                        minLength: { value: 2, message: 'Confirm Password too short' },
-                        maxLength: { value: 20, message: "Confirm Password too long!" }
+                        required: { value: true, message: "Missing  mail", },
+                        minLength: { value: 2, message: 'mail too short' },
+                        maxLength: { value: 20, message: "mail too long!" }
                     }
                 )}
             />
@@ -102,11 +111,11 @@ const ChangePassword = (props:any) =>{
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-             Change Password
+              Validate User
             </Button>
-            {error &&       
-                <Alert severity="error">Passwords are not equal</Alert>
-            }
+             {error &&       
+          <Alert severity="error">Username or mail are worng! Please try again</Alert>
+        }
             <Grid container>
               <Grid item>
                 <Link variant="body2" href='/register'>
@@ -116,8 +125,8 @@ const ChangePassword = (props:any) =>{
             </Grid>
           </Box>
         </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
-    )
+  );
 }
-export default ChangePassword;

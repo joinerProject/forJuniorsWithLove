@@ -7,7 +7,8 @@ class Config {
     public userUrl = "";
     public addChatUrl = '';
     public allChats = '';
-    public confirmUser = ""
+    public confirmUser = "";
+    public changePassword = "";
 }
 class DevelopmentConfig extends Config {
     public chatListUrl = 'http://localhost:3001/api/all-chats';
@@ -18,7 +19,9 @@ class DevelopmentConfig extends Config {
     public registerUrl = "http://localhost:3001/api/auth/register";
     public loginUrl = "http://localhost:3001/api/auth/login";
     public userUrl = "http://localhost:3001/api/add-user/";
-    public confirmUser = "http://localhost:3001/api/auth/is-exist-user"
+    public confirmUser = "http://localhost:3001/api/auth/is-exist-user";
+    public changePassword = "http://localhost:3001/api/auth/change-password";
+
 
 }
 class TestConfig extends Config {
@@ -30,7 +33,9 @@ class TestConfig extends Config {
     public registerUrl = "http://localhost:3001/api/auth/register";
     public loginUrl = "http://localhost:3001/api/auth/login";
     public userUrl = "http://localhost:3001/api/add-user/";
-    public confirmUser = "http://localhost:3001/api/auth/is-exist-user"
+    public confirmUser = "http://localhost:3001/api/auth/is-exist-user";
+    public changePassword = "http://localhost:3001/api/auth/change-password";
+
 
 }
 class ProductionConfig extends Config {
@@ -41,7 +46,9 @@ class ProductionConfig extends Config {
     public loginUrl = "http://localhost:3001/api/auth/login";
     public allChats = 'http://localhost:3001/api/all-chats'
     public userUrl = "http://localhost:3001/api/add-user/";
-    public confirmUser = "http://localhost:3001/api/auth/is-exist-user"
+    public confirmUser = "http://localhost:3001/api/auth/is-exist-user";
+    public changePassword = "http://localhost:3001/api/auth/change-password";
+
 
 }
 let config: Config;
