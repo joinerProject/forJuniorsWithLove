@@ -7,35 +7,36 @@ import store from "../redux/Store";
 import config from "../utils/config";
 
 class AuthService {
+  public async register(userInfo: UserModel) {
+    // const registerForm = new FormData();
+    // console.log('form to submit',registerForm)
+    const response = await axios.post(config.registerUrl, userInfo);
+    const token = response.data;
+    console.log("token", response);
+    store.dispatch(RegisterAction(token));
+    return;
+  }
+  public async login(loginInfo: LoginModel) {
+    const response = await axios.post(config.loginUrl, loginInfo);
+    const token = response.data;
+    store.dispatch(LoginAction(token));
+    return;
+  }
 
-    public async register(userInfo:UserModel){
-        const registerForm = new FormData();
-        console.log('form to submit',registerForm)
-        const response = await axios.post(config.registerUrl, userInfo);
-        const token = response.data;
-        console.log("token", token);
-        store.dispatch(RegisterAction(token));
-        return;
-}
-    public async login(loginInfo:LoginModel) {
-        const response = await axios.post(config.loginUrl, loginInfo);
-        const token = response.data;
-        store.dispatch(LoginAction(token));
-        return;
-    }
+  public async confirmUser(confirmInfo: ConfirmUser) {
+    const response = await axios.post(config.confirmUser, confirmInfo);
+    console.log("response.data", response.data);
+    return response;
+  }
 
-    public async confirmUser(confirmInfo:ConfirmUser){
-        const response = await axios.post(config.confirmUser, confirmInfo);
-        console.log("response.data", response.data);
-        return response;
-
-    }
-
-    public async changePassword(userId:string, password:string){
-        const response = await axios.post<string>(config.changePassword, {userId, password});
-        const token = response.data;
-        return store.dispatch(LoginAction(token));
-    }
+  public async changePassword(userId: string, password: string) {
+    const response = await axios.post<string>(config.changePassword, {
+      userId,
+      password,
+    });
+    const token = response.data;
+    return store.dispatch(LoginAction(token));
+  }
 }
 const authService = new AuthService();
 export default authService;
